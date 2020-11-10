@@ -1,7 +1,7 @@
 server:
   port: 8090
 
-debug: true
+#debug: true
 logging.level.com.tanknavy.angular.dao: debug
 
 spring:

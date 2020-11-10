@@ -16,6 +16,7 @@ export class ProductListComponent implements OnInit { //生命周期hook，在�
   //num = 0; count = 0; //测试
   products: Product[]; //组件中得到属性(数据)可以和html共享
   currentCategoryId: number;
+  currentCategoryName: string; //增加功能
 
   constructor(private productService: ProductService, //依赖注入servcie，就是向backend请求数据
     private route: ActivatedRoute) { } //当前的路由
@@ -36,9 +37,11 @@ export class ProductListComponent implements OnInit { //生命周期hook，在�
     if (hasCategoryId) {
       //转换"id"参数string到number,使用"+"快捷转换
       this.currentCategoryId = + this.route.snapshot.paramMap.get('id');
+      this.currentCategoryName = this.route.snapshot.paramMap.get('name'); //有id必须可以取到category
     } else {
       //如果不指定，默认1
       this.currentCategoryId = 4;
+      this.currentCategoryName = 'Luggage';
     }
     //console.log(`listProducts hasCategoryId: ${hasCategoryId} , ${this.currentCategoryId}`) //test
 

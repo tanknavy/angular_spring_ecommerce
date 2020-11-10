@@ -14,7 +14,8 @@ import { ProductCategoryMenuComponent } from './components/product-category-menu
 
 //配置路由
 const routes: Routes = [
-  { path: 'category/:id', component: ProductListComponent },//当路径匹配时，new这个组件
+  //{ path: 'category/:id', component: ProductListComponent },//当路径匹配时，new这个组件
+  { path: 'category/:id/:name', component: ProductListComponent },//当路径匹配时，new这个组件
   { path: 'category', component: ProductListComponent },//当路径匹配时，new这个组件
   { path: 'products', component: ProductListComponent },//当路径匹配时，new这个组件
   //{ path: 'products', component: SalesPersonListComponent },//测试

@@ -5,7 +5,10 @@
             <li *ngFor="let cat of productCategories">
                 <!-- <a href="#">Books</a> -->
                 <!--单页路由，active-link是一个style-->
-                <a routerLink="/category/{{cat.id}}" routerLinkActive="active-link">{{cat.categoryName}}</a>
+                <!-- <a routerLink="/category/{{cat.id}}" routerLinkActive="active-link">{{cat.categoryName}}</a> -->
+                <!--除了在组件的html显示categoryName, 还想在其它组件显示categoryName-->
+                 <a routerLink="/category/{{cat.id}}/{{cat.categoryName}}" routerLinkActive="active-link">{{cat.categoryName}}</a>
+
             </li>
 
         </ul>
