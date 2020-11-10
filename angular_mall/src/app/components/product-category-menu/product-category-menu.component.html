@@ -5,9 +5,12 @@
             <li *ngFor="let cat of productCategories">
                 <!-- <a href="#">Books</a> -->
                 <!--单页路由，active-link是一个style-->
+                <!--一样的套路，菜单组件先全部显示出来，根据用户点击路由到其它组件-->
                 <!-- <a routerLink="/category/{{cat.id}}" routerLinkActive="active-link">{{cat.categoryName}}</a> -->
+                
                 <!--除了在组件的html显示categoryName, 还想在其它组件显示categoryName-->
-                 <a routerLink="/category/{{cat.id}}/{{cat.categoryName}}" routerLinkActive="active-link">{{cat.categoryName}}</a>
+                <!--路径是prefix匹配的，id是用户链接输入的，categoryName是查询得到的，反向补足这个routerLink！！！-->
+                <a routerLink="/category/{{cat.id}}/{{cat.categoryName}}" routerLinkActive="active-link">{{cat.categoryName}}</a>
 
             </li>
 

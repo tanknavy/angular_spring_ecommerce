@@ -10,4 +10,5 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin("http://192.168.1.187:4200")
 @RepositoryRestResource(collectionResourceRel = "productCategory", path = "product-category")
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory,Long> {//entity和primary key
+
 }

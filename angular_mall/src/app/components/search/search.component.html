@@ -1,0 +1,23 @@
+<!--html原始搜索框和提交按钮，比对一下-->
+<!-- <form class="form-header" onsubmit="return false;" method="GET">
+    <input class="au-input au-input-xl" type="text" name="search" placeholder="Search for data ..." />
+    <button class="au-btn-submit" type="submit">
+        Search
+    </button>
+</form> -->
+
+
+<!--angular中-->
+<div class="form-header" >
+
+    <!--监听回车键，#myInput类似id="myInput",调用angular的方法doSearch-->
+    <input #myInput type="text" 
+            class="au-input au-input-xl" 
+            placeholder="Search for products..."
+            (keyup.enter)="doSearch(myInput.value)"/>
+
+    <button (click)="doSearch(myInput.value)" class="au-btn-submit">
+        Search
+    </button>
+
+</div>

@@ -8,8 +8,10 @@ import { ProductCategory } from '../common/product-category';
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService { //http请求拿数据，同步的？1
+export class ProductService {
 
+
+  //http请求拿数据，同步的？1
   //private baseUrl = 'http://192.168.1.187:8090/api/products?size=100';
   private baseUrl = 'http://192.168.1.187:8090/api/products'; //后面接search的话，这里千万不能加?size=
   private categoryUrl = 'http://192.168.1.187:8090/api/product-category';
@@ -28,16 +30,41 @@ export class ProductService { //http请求拿数据，同步的？1
     console.log(`getProductList: ${searchUrl}`) //test
 
     //return this.httpClient.get<GetResponse>(this.baseUrl).pipe(
-    return this.httpClient.get<GetResponseProducts>(searchUrl).pipe( //url
+    return this.getProducts(searchUrl);
+  }
+
+  //refactor, 公共部分代码提取出来
+  private getProducts(searchUrl: string): Observable<Product[]> {
+    return this.httpClient.get<GetResponseProducts>(searchUrl).pipe(
       map(response => response._embedded.products)
     );
   }
 
+  //获取商品分类
   getProductCategories(): Observable<ProductCategory[]> {
 
     return this.httpClient.get<GetResponseProductCategory>(this.categoryUrl).pipe( //url
       map(response => response._embedded.productCategory)
     );
+  }
+
+  //搜索商品
+  searchProducts(theKeyword: string): Observable<Product[]> {
+    //@TODO：based on URL
+    //使用spring data rest下的search url
+    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`; //js支持这种`${}`解析变量为字符串
+    console.log(`searchProducts: ${searchUrl}`) //test
+
+    return this.getProducts(searchUrl);
+
+  }
+
+  //商品详情
+  getProduct(theProductId: number): Observable<Product> { //返回一个商品，不是结合
+    const productUrl = `${this.baseUrl}/${theProductId}`; //js支持这种`${}`解析变量为字符串
+    //console.log(`getProduct: ${searchUrl}`) //test
+    //return this.getProducts(searchUrl);
+    return this.httpClient.get<Product>(productUrl); //由于这个rest请求返回json格式product，直接转了
   }
 
 }

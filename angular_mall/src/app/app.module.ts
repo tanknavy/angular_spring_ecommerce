@@ -5,20 +5,28 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SalesPersonListComponent } from './sales-person-list/sales-person-list.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
+import { SearchComponent } from './components/search/search.component'
 
 import { HttpClientModule } from '@angular/common/http' //ajax调用后端
 import { ProductService } from './services/product.service';//服务，类似mvc的controller,控制model/data
 
 import { Routes, RouterModule } from '@angular/router';
-import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component' //路由
+import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component' //路由
 
-//配置路由
+//配置路由,默认是prefix匹配(重要)，前面相同，所以要长路径写在短路径前面，否则出错
 const routes: Routes = [
   //{ path: 'category/:id', component: ProductListComponent },//当路径匹配时，new这个组件
-  { path: 'category/:id/:name', component: ProductListComponent },//当路径匹配时，new这个组件
-  { path: 'category', component: ProductListComponent },//当路径匹配时，new这个组件
+  { path: 'category/:id/:name', component: ProductListComponent },//只请求id, 自动带上categoryName,
+  { path: 'category', component: ProductListComponent },// 比上个category/:id要短，写在下面，
   { path: 'products', component: ProductListComponent },//当路径匹配时，new这个组件
   //{ path: 'products', component: SalesPersonListComponent },//测试
+
+  //扩展的
+  { path: 'search/:keyword', component: ProductListComponent }, //输入keyword搜索也是一个路由，因为要刷新内容
+  { path: 'products/:id', component: ProductDetailsComponent }, //商品详情页，注意prefix的route
+
+  //空的和默认的放最下面
   { path: '', redirectTo: '/products', pathMatch: 'full' },//空路径，pathMatch㤇完全匹配
   { path: '**', redirectTo: '/products', pathMatch: 'full' }//以上都不匹配时
 ]
@@ -28,7 +36,9 @@ const routes: Routes = [
     AppComponent,
     SalesPersonListComponent,
     ProductListComponent,
-    ProductCategoryMenuComponent
+    ProductCategoryMenuComponent,
+    SearchComponent,
+    ProductDetailsComponent
   ],
   imports: [
     RouterModule.forRoot(routes),//路由模块
