@@ -1,0 +1,25 @@
+server:
+  port: 8090
+
+debug: true
+logging.level.com.tanknavy.angular.dao: debug
+
+spring:
+  datasource:
+    username: hbstudent
+    password: hbstudent
+    url: jdbc:mysql://localhost:3306/full-stack-ecommerce?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&serverTimezone=UTC
+    driver-class-name: com.mysql.jdbc.Driver
+    #为了Druid数据源能使用配置参数，需要写config类，注入Druid，@ConfigurationProperties指定该文件来绑定值
+    #type: com.alibaba.druid.pool.DruidDataSource
+
+#spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
+spring.data.rest.base-path: /api
+
+#spring.profiles.active=dev
+#logging.level.com.tanknavy.angular-mall=warn
+
+#logging.file=springboot_hello.log
+#logging.path=e:/tmp/
+#logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss.SSS} [%thred] %-5level %logger{50} - %msg%n
+#logging.pattern.file=%d{yyyy-MM-dd HH:mm:ss.SSS} === [%thred] %-5level %logger{50} - %msg%n

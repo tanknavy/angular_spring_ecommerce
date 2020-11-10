@@ -1,0 +1,32 @@
+<p>sales-person-list works!</p>
+<p>Just a quick test</p>
+
+<p>
+    {{salesPersonList[0].firstName}} {{salesPersonList[0].lastName}}
+</p>
+
+<hr/>
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Email</th>
+            <th>Sales Volume</th>
+            <th>Met Quota?</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <tr *ngFor="let sp of salesPersonList">
+            <td>{{ sp.firstName}}</td>
+            <td>{{ sp.lastName}}</td> 
+            <td>{{ sp.email}}</td> 
+            <td>{{ sp.salesVolume |currency:'USD'}}</td>
+            <td>
+                <div *ngIf="sp.salesVolume >= 5500; else myElseBlock">Yes</div>
+                <ng-template #myElseBlock>No</ng-template>
+            </td>
+        </tr>
+    </tbody>
+</table>

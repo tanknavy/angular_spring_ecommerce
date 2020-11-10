@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<body ng-app="">
+
+<p>Click the button:</p>
+
+<button ng-click="count = count + 1;num=num+1" ng-init="count=0;num=0">Add</button>
+<button ng-click="count = count + 1;num=num-1" ng-init="count=0;num=0">Minus</button>
+
+<p>The button has been clicked {{count}} times.</p>
+<p>The button has been clicked {{num}} times.</p>
+
+<p>This example increases the value of the variable "count" every time you click the button.</p>
+
+</body>
+</html>

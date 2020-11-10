@@ -1,0 +1,41 @@
+
+
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Units in Stock</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let product of products">
+            <td class="align-middle">
+                <img src="{{product.imageUrl}}" height="50"/>
+            </td>
+            <td class="align-middle">{{ product.name}}</td>
+            <td class="align-middle">{{ product.unitPrice |currency:'USD'}}</td>
+            <td class="align-middle">{{ product.unitsInStock}}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<hr/>
+<div ng-app="myApp" ng-controller="myCtrl">
+<p>Click the button:</p>
+
+<button ng-click="count = count + 1;num=num+1">Add</button>
+<button ng-click="count = count + 1;num=num-1">Minus</button>
+
+<p>The button has been clicked {{count}} times.</p>
+<p>The button has been clicked {{num}} times.</p>
+
+<p>This example increases the value of the variable "count" every time you click the button.</p>
+</div>
+
+<script>
+    
+</script>
