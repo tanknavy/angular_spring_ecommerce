@@ -1,5 +1,7 @@
 <div class="cart-area d-n">
-    <a href="shopping-detail.html">
+    <!-- <a href="shopping-detail.html"> -->
+    <!--href改为routerLink-->    
+    <a routerLink="/cart-details">
         <!-- <div class="total">36.22 <span> 2</span> </div>  -->
         <div class="total">{{totalPrice |currency:'USD'}}
             <span>{{totalQuantity}}</span>

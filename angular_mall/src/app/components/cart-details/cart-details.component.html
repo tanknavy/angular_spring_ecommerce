@@ -1,0 +1,73 @@
+<div class="main-content">
+    <div class="section-content section-content-p30">
+        <div class="container-fluid">
+            
+            <!--如果有item就显示购物车列表-->
+            <div *ngIf="cartItems.length > 0">
+            <table class="table table-bordered">
+                <tr>
+                    <th width="20%">Product Image</th>
+                    <th width="50%">Product Detail</th>
+                    <th width="30%"></th>
+                </tr>
+                
+                <tr *ngFor="let tmpCartItem of cartItems">
+                    <td>
+                        <img src="{{tmpCartItem.imageUrl}}" class="img-responsive" width="150px">
+                    </td>
+                    <td>
+                        <p>{{tmpCartItem.name}}</p>
+                        <p>{{tmpCartItem.unitPrice|currency:'USD'}}</p>
+                    </td>
+                    <td>
+                        <div class="items">
+                            <!--想添加+,-按钮-->
+                            <!-- <label>Quantity:</label>{{tmpCartItem.quantity}} -->
+                            <label>Quantity:</label>
+                                <div class="row no-gutters">
+                                    
+                                    <div class="col">
+                                        <button (click)="incrementQty(tmpCartItem)" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="col ml-4 mr-2">
+                                        {{tmpCartItem.quantity}}
+                                    </div>
+
+                                    <div class="col">
+                                        <button (click)="decrementQty(tmpCartItem)" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            <div class="col-8"></div>
+                        </div>
+
+                        <button (click)="remove(tmpCartItem)" class="btn btn-primary btn-sm">Remove</button>
+                        <p class="mt-2">Subtotal: {{tmpCartItem.quantity * tmpCartItem.unitPrice |currency:'USD'}}</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2"></td>
+                    <td style="font-weight: bold">
+                        <p>Total Quantity: {{totalQuantity}}</p>
+                        <p>Shipping: FREE</p>
+                        <p>TotalPrice: {{totalPrice |currency:'USD'}}</p>
+                    </td>
+                </tr>
+                
+            </table>
+            </div>
+            <!--if cart is empty-->
+            <div *ngIf="cartItems.length == 0" class="alert alert-warning col-md-12" role="alert">
+                Your shopping cart is emtpy.
+            </div>
+
+        </div>
+    </div>
+
+</div>

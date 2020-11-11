@@ -48,7 +48,6 @@ export class CartService {
 
     //添加上平后计算总价和数量
     this.computeCartTotals();
-
   }
 
   //计算总价和数量
@@ -83,7 +82,23 @@ export class CartService {
   }
 
 
-  //数据订阅者
+  decrementQty(theCartItem: CartItem) {
+    theCartItem.quantity--;
+    if (theCartItem.quantity == 0) {
+      this.remove(theCartItem);
+    } else {
+      this.computeCartTotals(); //重新计算
+    }
+  }
+
+  //从cartItem array中移除元素，使用findIndex查找定位并splice移除掉
+  remove(theCartItem: CartItem) {
+    const itemIndex = this.cartItems.findIndex(tempItem => tempItem.id === theCartItem.id)
+    if (itemIndex > -1) { //如果array中找到该元素
+      this.cartItems.splice(itemIndex, 1); //删除该索引元素，有可能后面往前移动
+      this.computeCartTotals(); //重新计算cartItem
+    }
+  }
 
 
 }
