@@ -3,7 +3,9 @@
     <div class="container-fluid">
 
         <!-- <p style="margin-top: 100px">{{product.name}}</p> -->
-        <img src="{{product.imageUrl}}" class="detail-img">
+        <!-- <img src="{{product.imageUrl}}" class="detail-img"> -->
+        <!--如果要访问的property是null没有初始化会报错，推荐ts中初始化，但这里可以使用?不访问空值-->
+        <img src="{{product?.imageUrl}}" class="detail-img">
         <h3>{{product.name}}</h3>
         <div class="price">{{product.unitPrice|currency:'USD'}}</div>
         <a href="#" class="primary-btn">Add to cart</a>
@@ -12,7 +14,11 @@
         <h4>Description</h4>
         <p>{{product.description}}</p>
 
-        <a routerLink="/products" class="mt-5">Back to Product List</a>
+        
+        <!-- <a routerLink="/products" class="mt-5">Back to Product List</a> -->
+        <!--如何回到上一页呢？点击后html执行componenet中class的方法-->
+        <!--()="" 是Event-binding, 就是html里面的event-hanlding -->>
+        <a  (click)="backClicked()" class="mt-5">Back to Product List</a>
 
     </div>
 

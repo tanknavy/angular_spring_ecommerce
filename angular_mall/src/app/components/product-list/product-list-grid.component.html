@@ -11,6 +11,7 @@
                     <div class="product-box">
 
                         <!--图片加上a标签href, 在单页应用中就是routerLink-->
+                        <!--ts中class没有id字段，rest有返回，好像也可以正常显示,使用angular language service可以提醒编译错误-->
                         <a routerLink="/products/{{product.id}}">
                             <img src="{{product.imageUrl}}" class="img-responsive">
                         </a>
@@ -31,6 +32,49 @@
                 </div>
 
             </div>
+
+            <!--在产品列表页底部使用paginatie增加分页显示-->
+            <!--page组件的数据和本product-list组件中data-binding单向和双向绑定-->
+            <!--begin footer-->
+            <div class="footer-pagination">
+                <div class="row">
+                    <div class="col-md-6"></div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-9" style="padding-left: 30%;">
+                                <!--ngb组件中property和method和本product-list组件进行双向或单向data-bing,event-binding-->
+                                <ngb-pagination [(page)]="thePageNumber" 
+                                                [pageSize]="thePageSize"
+                                                [collectionSize]="theTotalElements" 
+                                                [maxSize]="5"
+                                                [boundaryLinks]="false"
+                                                (pageChange)="listProducts()">
+                                </ngb-pagination>
+
+                            </div>
+
+                            <!--用户可以自定义pagesize-->
+                            <div class="col-md-3 mt-2" style="text-align: right;">
+                                <span class="mr-2">PageSize</span>
+                                <select (change)="updatePageSize($event.target.value)">
+                                    <option select="true">5</option>
+                                    <option>2</option>
+                                    <option>10</option>
+                                    <option>20</option>
+                                    <option>50</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!--end footer-->
+
+
         </div>
     </div>
 

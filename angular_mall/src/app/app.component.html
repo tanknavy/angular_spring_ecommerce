@@ -40,13 +40,15 @@
 								</button>
 							</form> -->
 
-
-							<div class="cart-area d-n">
+							<!--以下cart-status的html原型使用angular组件替代-->
+							<app-cart-status></app-cart-status>
+							<!-- <div class="cart-area d-n">
 								<a href="shopping-detail.html">
 									<div class="total">19.22 <span> 2</span> </div> <i class="fa fa-shopping-cart"
 										aria-hidden="true"></i>
 								</a>
-							</div>
+							</div> -->
+
 						</div>
 						<div class="account-wrap"></div>
 					</div>
@@ -57,8 +59,9 @@
 
             <!-- MAIN CONTENT-->
             <!--添加路由，而不是直接写组件，基于route渲染相关componenet，需要将上面相关href更新为routerLink='xx' routerLinkActive="active-link"-->
-			<!--商品分类，搜索结果，商品详情...-->>
+			<!--商品分类，搜索结果，商品详情...router-outlet相当于一个placeholder-->>
 			<router-outlet></router-outlet>
+			
             <!--测试组件中crud-->
 			<!-- <app-product-list></app-product-list> -->
 

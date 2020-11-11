@@ -14,6 +14,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component' //路由
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CartStatusComponent } from './components/cart-status/cart-status.component' //导入模块使用pagination功能
+
 //配置路由,默认是prefix匹配(重要)，前面相同，所以要长路径写在短路径前面，否则出错
 const routes: Routes = [
   //{ path: 'category/:id', component: ProductListComponent },//当路径匹配时，new这个组件
@@ -38,13 +41,15 @@ const routes: Routes = [
     ProductListComponent,
     ProductCategoryMenuComponent,
     SearchComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    CartStatusComponent
   ],
   imports: [
     RouterModule.forRoot(routes),//路由模块
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule, //http,ajx
+    NgbModule //使用NgbModule中的功能
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]
