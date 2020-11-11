@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CartItem } from 'src/app/common/cart-item';
 import { Product } from 'src/app/common/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -28,7 +30,10 @@ export class ProductListComponent implements OnInit { //生命周期hook，在�
   previouseKeyword: string = null;//用于搜索词变换
 
   constructor(private productService: ProductService, //依赖注入servcie，就是向backend请求数据
-    private route: ActivatedRoute) { } //当前的路由
+    private cartService: CartService, //注入cartservice
+    private route: ActivatedRoute) {
+    console.log("ProductList组件构造函数调用...")
+  } //当前的路由
 
   //类似@PostConstruct, 在构造函数以后执行
   ngOnInit(): void {
@@ -76,8 +81,6 @@ export class ProductListComponent implements OnInit { //生命周期hook，在�
     this.currentCategoryName = 'all'//
 
   }
-
-
 
 
   //重构
@@ -144,6 +147,15 @@ export class ProductListComponent implements OnInit { //生命周期hook，在�
     this.thePageSize = pageSize;
     this.thePageNumber = 1; //改变了pageSize重置到第一页
     this.listProducts();//内容也要重新刷新
+  }
+
+  //商品添加到购物车
+  addToCart(theProduct: Product) {
+    console.log(`addToCart: ${theProduct.name} ${theProduct.unitPrice}`)
+    //TODO
+    const theCartItem = new CartItem(theProduct);
+    this.cartService.addToCart(theCartItem);
+
   }
 
 }

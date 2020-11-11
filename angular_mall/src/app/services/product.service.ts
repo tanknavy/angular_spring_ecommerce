@@ -16,7 +16,9 @@ export class ProductService {
   private baseUrl = 'http://192.168.1.187:8090/api/products'; //后面接search的话，这里千万不能加?size=
   private categoryUrl = 'http://192.168.1.187:8090/api/product-category';
 
-  constructor(private httpClient: HttpClient) { } //依赖注入httpClient
+  constructor(private httpClient: HttpClient) {
+    console.log("ProductService构造函数被调用...")
+  } //依赖注入httpClient
 
   //get返回一个observable, 
   //pipe映射JSON数据从spring data rest到Product array
