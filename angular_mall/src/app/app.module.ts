@@ -16,7 +16,9 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
-import { CartDetailsComponent } from './components/cart-details/cart-details.component' //导入模块使用pagination功能
+import { CartDetailsComponent } from './components/cart-details/cart-details.component';
+import { CheckoutComponent } from './components/checkout/checkout.component' //导入模块使用pagination功能
+import { ReactiveFormsModule } from '@angular/forms';
 
 //配置路由,默认是prefix匹配(重要)，前面相同，所以要长路径写在短路径前面，否则出错
 const routes: Routes = [
@@ -30,6 +32,7 @@ const routes: Routes = [
   { path: 'search/:keyword', component: ProductListComponent }, //输入keyword搜索也是一个路由，因为要刷新内容
   { path: 'products/:id', component: ProductDetailsComponent }, //商品详情页，注意prefix的route
   { path: 'cart-details', component: CartDetailsComponent },//购物车详情
+  { path: 'checkout', component: CheckoutComponent },
 
   //空的和默认的放最下面,重定向
   { path: '', redirectTo: '/products', pathMatch: 'full' },//空路径，pathMatch㤇完全匹配
@@ -45,14 +48,17 @@ const routes: Routes = [
     SearchComponent,
     ProductDetailsComponent,
     CartStatusComponent,
-    CartDetailsComponent
+    CartDetailsComponent,
+    CheckoutComponent
   ],
   imports: [
     RouterModule.forRoot(routes),//路由模块
     BrowserModule,
     AppRoutingModule,
     HttpClientModule, //http,ajx
-    NgbModule //使用NgbModule中的功能
+    NgbModule, //使用NgbModule中的分页功能
+    ReactiveFormsModule //form组件
+
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

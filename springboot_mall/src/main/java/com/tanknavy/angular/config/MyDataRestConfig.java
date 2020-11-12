@@ -1,7 +1,9 @@
 package com.tanknavy.angular.config;
 
+import com.tanknavy.angular.entity.Country;
 import com.tanknavy.angular.entity.Product;
 import com.tanknavy.angular.entity.ProductCategory;
+import com.tanknavy.angular.entity.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -34,24 +36,32 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         //暂时rest只提供read only 服务
         HttpMethod[] theUnsupportedActions = {HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE};
 
-        //disable HTTP methods for entiry Product
-        config.getExposureConfiguration()
-                .forDomainType(Product.class)
-                .withItemExposure( (metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
+        //disable HTTP methods for entity Product
+//        config.getExposureConfiguration()
+//                .forDomainType(Product.class)
+//                .withItemExposure( (metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
+//                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
+        //重构以上代码，抽取为一个方法
+        disableHttpMethods(Product.class, config, theUnsupportedActions);
 
-        //disable HTTP methods for entiry ProductCategory
-        config.getExposureConfiguration()
-                .forDomainType(ProductCategory.class)
-                .withItemExposure( (metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
+        //disable HTTP methods for entity ProductCategory
+        disableHttpMethods(ProductCategory.class, config, theUnsupportedActions);
+        disableHttpMethods(Country.class, config, theUnsupportedActions);
+        disableHttpMethods(State.class, config, theUnsupportedActions);
 
 
         //call an internal helper method
         exposeIds(config);
 
     }
-    
+
+    private void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions) {
+        config.getExposureConfiguration()
+                .forDomainType(theClass)
+                .withItemExposure( (metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
+                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
+    }
+
     //REST默认不会显示entity的id
     private void exposeIds(RepositoryRestConfiguration config) {
         //expose entity ids

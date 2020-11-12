@@ -1,6 +1,6 @@
 import { Product } from './product';
 
-export class CartItem { //向购物车添加一项商品
+export class CartItem { //向购物车添加一项商品，使用该商品来初始化cartItem
     id: number;
     name: string;
     imageUrl: string;

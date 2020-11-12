@@ -61,7 +61,7 @@ export class CartService {
     }
 
     //publish new values，发布最新数据给subscribers
-    this.totalPrice.next(totalPriceValue);
+    this.totalPrice.next(totalPriceValue); //next重新发布
     this.totalQuantity.next(totalQuantityValue);
 
     //记录cart data为了debug

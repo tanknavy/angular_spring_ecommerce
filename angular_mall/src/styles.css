@@ -548,7 +548,9 @@ input.au-input.au-input-xl {
 }
 
 .main-content.page-m {
-  padding: 10% 15% !important
+  /* padding: 10% 15% !important */
+  /* padding: top right bottom left */
+  padding: 10% 30% 10% 5%;
 }
 
 /* 
