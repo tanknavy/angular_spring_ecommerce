@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';//先要在module中引入ReactiveFormsModule
+import { Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';//先要在module中引入ReactiveFormsModule
 import { Country } from 'src/app/common/country';
 import { State } from 'src/app/common/state';
 import { CartService } from 'src/app/services/cart.service';
 import { ShopFormService } from 'src/app/services/shop-form.service';
+import { ShopValidators } from 'src/app/validators/shop-validators';
 
 @Component({
   selector: 'app-checkout',
@@ -41,12 +43,24 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkoutFormGroup = this.formBuilder.group({ //form group,json对象
+      //一组表单
+
+      //1. 客户基本信息表单
       customer: this.formBuilder.group({
-        firstName: [''],
-        lastName: [''],
-        email: ['']
+        //firstName: [''], //使用一组Validators,定制notOnlyWhitespace
+        firstName: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          ShopValidators.notOnlyWhitespace]), //不能全是空格符
+
+        lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+
+        //angular的email校验器不检查域名
+        email: new FormControl('',
+          [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
       }),
 
+      //2. 地址表
       shippingAddress: this.formBuilder.group({
         street: [''],
         city: [''],
@@ -55,6 +69,7 @@ export class CheckoutComponent implements OnInit {
         zipCode: ['']
       }),
 
+      //3. 地址表单
       billingAddress: this.formBuilder.group({
         street: [''],
         city: [''],
@@ -63,6 +78,7 @@ export class CheckoutComponent implements OnInit {
         zipCode: ['']
       }),
 
+      //4.信用卡表单
       creditCard: this.formBuilder.group({
         cardType: [''],
         nameOnCard: [''],
@@ -107,17 +123,28 @@ export class CheckoutComponent implements OnInit {
       }
     )
 
-    //populate states based on selected country
-
-
   }
+
+  //为了表单validator显示error message
+  get firstName() { return this.checkoutFormGroup.get('customer.firstName'); }
+  get lastName() { return this.checkoutFormGroup.get('customer.lastName'); }
+  get email() { return this.checkoutFormGroup.get('customer.email'); }
+
+
 
   //formGroup中全部form一起提交时
   onSubmit() {
     console.log("Handling checkout sumbit button..");
+
+    //提交表单时错误全部飘红
+    if (this.checkoutFormGroup.invalid) {
+      this.checkoutFormGroup.markAllAsTouched(); //标记
+    }
+
     console.log(this.checkoutFormGroup.get('customer').value); //从当前formGroup的customer这个form中拿到全部值
     console.log(this.checkoutFormGroup.get('customer').value.email);//get从当前customer这个form的email字段取得值
     console.log(this.totalPrice)
+
   }
 
   //从一个form全部赋值到另外一个form, 只会在checked时同步，并不会一只同步
