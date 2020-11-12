@@ -43,7 +43,7 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkoutFormGroup = this.formBuilder.group({ //form group,json对象
-      //一组表单
+      //一组表单(reactive form), 校验器
 
       //1. 客户基本信息表单
       customer: this.formBuilder.group({
@@ -55,37 +55,37 @@ export class CheckoutComponent implements OnInit {
 
         lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
 
-        //angular的email校验器不检查域名
+        //angular的email校验器不检查域名, pattern校验
         email: new FormControl('',
           [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
       }),
 
       //2. 地址表
       shippingAddress: this.formBuilder.group({
-        street: [''],
-        city: [''],
-        state: [''],
-        country: [''],
-        zipCode: ['']
+        street: new FormControl('', [Validators.required, ShopValidators.notOnlyWhitespace]),
+        city: new FormControl('', [Validators.required, ShopValidators.notOnlyWhitespace]),
+        state: new FormControl('', [Validators.required]),
+        country: new FormControl('', [Validators.required]),
+        zipCode: new FormControl('', [Validators.required, Validators.minLength(5)]),
       }),
 
       //3. 地址表单
       billingAddress: this.formBuilder.group({
-        street: [''],
-        city: [''],
-        state: [''],
-        country: [''],
-        zipCode: ['']
+        street: new FormControl('', [Validators.required, ShopValidators.notOnlyWhitespace]),
+        city: new FormControl('', [Validators.required, ShopValidators.notOnlyWhitespace]),
+        state: new FormControl('', [Validators.required]),
+        country: new FormControl('', [Validators.required]),
+        zipCode: new FormControl('', [Validators.required, Validators.minLength(5)]),
       }),
 
       //4.信用卡表单
       creditCard: this.formBuilder.group({
-        cardType: [''],
-        nameOnCard: [''],
-        cardNumber: [''],
-        securityCode: [''],
-        expirationMonth: [''],
-        expirationYear: ['']
+        cardType: new FormControl('', [Validators.required]),
+        nameOnCard: new FormControl('', [Validators.required, Validators.minLength(2), ShopValidators.notOnlyWhitespace]),
+        cardNumber: new FormControl('', [Validators.required, Validators.pattern('[0-9]{16}')]),
+        securityCode: new FormControl('', [Validators.required, Validators.pattern('[0-9]{3}')]),
+        expirationMonth: [''], //默认已选当前月份
+        expirationYear: [''],
       })
 
     });
@@ -122,15 +122,33 @@ export class CheckoutComponent implements OnInit {
         this.countries = data;
       }
     )
-
   }
 
-  //为了表单validator显示error message
+  //为了在html的表单validator显示error message，html中会调用这些方法
+  // <div * ngIf="shippingAddressCountry.invalid && (shippingAddressCountry.dirty || shippingAddressCountry.touched)" //在html中
   get firstName() { return this.checkoutFormGroup.get('customer.firstName'); }
   get lastName() { return this.checkoutFormGroup.get('customer.lastName'); }
   get email() { return this.checkoutFormGroup.get('customer.email'); }
 
+  //html中shippingAddress校验，失败显示error message
+  get shippingAddressStreet() { return this.checkoutFormGroup.get('shippingAddress.street'); }
+  get shippingAddressCity() { return this.checkoutFormGroup.get('shippingAddress.city'); }
+  get shippingAddressState() { return this.checkoutFormGroup.get('shippingAddress.state'); }
+  get shippingAddressZipCode() { return this.checkoutFormGroup.get('shippingAddress.zipCode'); }
+  get shippingAddressCountry() { return this.checkoutFormGroup.get('shippingAddress.country'); }
 
+  //html中billingAddress校验，失败显示error messsage
+  get billingAddressCity() { return this.checkoutFormGroup.get('billingAddress.city'); }
+  get billingAddressStreet() { return this.checkoutFormGroup.get('billingAddress.street'); }
+  get billingAddressState() { return this.checkoutFormGroup.get('billingAddress.state'); }
+  get billingAddressZipCode() { return this.checkoutFormGroup.get('billingAddress.zipCode'); }
+  get billingAddressCountry() { return this.checkoutFormGroup.get('billpingAddress.country'); }
+
+  //html中credit cart检验 ,失败显示error messsage
+  get creditCardType() { return this.checkoutFormGroup.get('creditCard.cardType'); }
+  get creditCardNameOnCard() { return this.checkoutFormGroup.get('creditCard.nameOnCard'); }
+  get creditCardNumber() { return this.checkoutFormGroup.get('creditCard.cardNumber'); }
+  get creidtCardSecurityCode() { return this.checkoutFormGroup.get('creditCard.securityCode'); }
 
   //formGroup中全部form一起提交时
   onSubmit() {
